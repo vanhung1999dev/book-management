@@ -1,14 +1,15 @@
 const User = require('../model/user');
+const Seneca = require('seneca')();
+Seneca.quiet()
+     .use(require('../service/user_service'));
 
 module.exports.Insert = async (req, res) => {
     try {
-        const user = await User.create({
-            username: 'hung',
-            fullname: 'nguyen van hung',
-            email: 'vanhung1999dev@gmail.com',
-            password: '123'
+        const data = req.body;
+        Seneca.act({ role: 'user', cmd: 'insert', data: data }, (err, result) => {
+            if (err) console.log(err);
+            res.send(result);
         });
-        res.send(user);
     } catch (error) {
         console.log(error);
     }
@@ -17,10 +18,10 @@ module.exports.Insert = async (req, res) => {
 module.exports.Get = async (req, res) => {
     try {
         const id = req.params.id;
-        const user = await User.findOne({
-            where: { id }
+        Seneca.act({ role: 'user', cmd: 'get', id: id }, (err, reuslt) => {
+            if (err) console.log(err);
+            res.send(reuslt);
         });
-        res.send(user);
     } catch (error) {
         console.log(error);
     }
@@ -28,8 +29,10 @@ module.exports.Get = async (req, res) => {
 
 module.exports.GetAll = async (req, res) => {
     try {
-        const users = await User.findAll();
-        res.send(users);
+        Seneca.act({ role: 'user', cmd: 'getAll' }, (err, reuslt) => {
+            if (err) console.log(err);
+            res.send(reuslt);
+        });
     } catch (error) {
         console.log(error);
     }
@@ -38,8 +41,10 @@ module.exports.GetAll = async (req, res) => {
 module.exports.Update = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await User.update({ email: 'game@gmail.com' }, { where: { id } });
-        res.send(result);
+        Seneca.act({ role: 'user', cmd: 'update', id: id }, (err, result) => {
+            if (err) console.log(err);
+            res.send(result);
+        });
     } catch (error) {
         console.log(error);
     }
@@ -48,9 +53,11 @@ module.exports.Update = async (req, res) => {
 module.exports.Delete = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = User.destroy({ where: { id } });
-        res.send(result);
+        Seneca.act({ role: 'user', cmd: 'delete', id: id }, (err, result) => {
+            if (err) console.log(err);
+            res.status(200).json(result);
+        });
     } catch (error) {
-        console.log(error);
+        console.log(err)
     }
 };
