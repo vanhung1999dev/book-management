@@ -1,4 +1,6 @@
+
 const Sequelize = require('sequelize');
+
 const connect = new Sequelize('Library_Book', 'root', 'vanhung1999', {
     host: 'localhost',
     dialect: 'mysql'
