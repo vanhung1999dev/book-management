@@ -6,7 +6,6 @@ const User = Connect.define('User', {
     username: { type: Sequelize.STRING, allowNull: false },
     fullname: { type: Sequelize.STRING },
     email: { type: Sequelize.STRING },
-    salt: { type: Sequelize.STRING },
     password: { type: Sequelize.STRING, allowNull: false },
     status: { type: Sequelize.INTEGER },
     block_massage: { type: Sequelize.STRING },

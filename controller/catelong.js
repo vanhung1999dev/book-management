@@ -36,7 +36,8 @@ module.exports.GetAll = async (req, res) => {
 module.exports.Update = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await Catelog.update({ name: 'noting' }, { where: { id: id } });
+        const data = req.body;
+        const result = await act({ role: 'catelog', cmd: 'update', data: data, id: id });
         res.send(result);
     } catch (error) {
         console.log(error);
@@ -46,7 +47,7 @@ module.exports.Update = async (req, res) => {
 module.exports.Delete = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await Catelog.destroy({ where: { id: id } });
+        const result = await act({ role: 'catelog', cmd: 'delete', id: id });
         res.status(200).json(result);
     } catch (error) {
         console.log(error);

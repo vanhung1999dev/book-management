@@ -35,8 +35,9 @@ module.exports.GetAll = async (req, res) => {
 
 module.exports.Update = async (req, res) => {
     try {
+        const data = req.body;
         const id = req.params.id;
-        const result = await act({ role: 'user', cmd: 'update', id: id });
+        const result = await act({ role: 'user', cmd: 'update', data: data, id: id });
         res.send(result);
     } catch (error) {
         console.log(error);

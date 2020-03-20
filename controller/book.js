@@ -26,7 +26,7 @@ module.exports.Get = async (req, res) => {
 
 module.exports.GetAll = async (req, res) => {
     try {
-        const books = await Seneca.act({ role: 'book', cmd: 'getAll' });
+        const books = await act({ role: 'book', cmd: 'getAll' });
         res.send(books);
     } catch (error) {
         console.log(error);
@@ -35,8 +35,9 @@ module.exports.GetAll = async (req, res) => {
 
 module.exports.Update = async (req, res) => {
     try {
+        const data = req.body;
         const id = req.params.id;
-        const result = await act({ role: 'book', cmd: 'update', id: id });
+        const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
         res.send(result);
     } catch (error) {
         console.log(error);

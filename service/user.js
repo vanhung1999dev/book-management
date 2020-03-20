@@ -31,8 +31,18 @@ module.exports = function user_service(options) {
 
     this.add({ role: 'user', cmd: 'update' }, async (msg, reply) => {
         try {
-            const result = await User.update({ username: 'nothing' }, { where: { id: msg.id } });
-            reply(null, result);
+            const result = await User.update(
+                {
+                    fullname: msg.data.fullname,
+                    email: msg.data.email,
+                    status: msg.data.status,
+                    block_massage: msg.data.block_massage,
+                    block_time: msg.data.block_time,
+                    create_time: msg.data.create_time,
+                    create_by: msg.data.create_by
+                },
+                { where: { id: msg.id } });
+            reply(null, {fiedAffected: result});
         } catch (error) {
             console.log(error);
         }

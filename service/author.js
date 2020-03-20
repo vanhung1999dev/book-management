@@ -30,7 +30,11 @@ module.exports = function author_service() {
 
     try {
         this.add({ role: 'author', cmd: 'update' }, async (msg, reply) => {
-            const result = await Author.update({ name: 'nothing' }, { where: { id: msg.id } });
+            const result = await Author.update({ 
+                name: msg.data.name,
+                description: msg.data.description,
+                email: msg.data.email
+            }, { where: { id: msg.id } });
             reply(null, { fieldAffect: result });
         });
     } catch (error) {
