@@ -1,14 +1,14 @@
-const Book = require('../model/book');
+const Catelog = require('../model/catelog');
 const Seneca = require('seneca')();
-Seneca.quiet().use(require('../service/book'));
+Seneca.quiet().use(require('../service/catelog'));
 const Promise = require('bluebird');
 const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to promise to handle 
 
 module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
-        const book = await act({ role: 'book', cmd: 'insert', data: data });
-        res.send(book);
+        const catelog = await act({ role: 'catelog', cmd: 'insert', data: data });
+        res.send(catelog);
     } catch (error) {
         console.log(error);
     }
@@ -17,8 +17,8 @@ module.exports.Insert = async (req, res) => {
 module.exports.Get = async (req, res) => {
     try {
         const id = req.params.id;
-        const book = await act({ role: 'book', cmd: 'get', id: id });
-        res.send(book);
+        const catelog = await act({ role: 'catelog', cmd: 'get', id: id });
+        res.send(catelog);
     } catch (error) {
         console.log(error);
     }
@@ -26,8 +26,8 @@ module.exports.Get = async (req, res) => {
 
 module.exports.GetAll = async (req, res) => {
     try {
-        const books = await Seneca.act({ role: 'book', cmd: 'getAll' });
-        res.send(books);
+        const catelogs = await act({ role: 'catelog', cmd: 'getAll' });
+        res.send(catelogs);
     } catch (error) {
         console.log(error);
     }
@@ -36,19 +36,19 @@ module.exports.GetAll = async (req, res) => {
 module.exports.Update = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await act({ role: 'book', cmd: 'update', id: id });
+        const result = await Catelog.update({ name: 'noting' }, { where: { id: id } });
         res.send(result);
     } catch (error) {
         console.log(error);
     }
-};
+}
 
 module.exports.Delete = async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await act({ role: 'book', cmd: 'delete', id: id });
+        const result = await Catelog.destroy({ where: { id: id } });
         res.status(200).json(result);
     } catch (error) {
-        console.log(err)
+        console.log(error);
     }
 };

@@ -1,6 +1,6 @@
 const User = require('../model/user');
 const Seneca = require('seneca')();
-Seneca.quiet().use(require('../service/user_service'));
+Seneca.quiet().use(require('../service/user'));
 const Promise = require('bluebird');
 const act = Promise.promisify(Seneca.act, { context: Seneca });
 
