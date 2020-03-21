@@ -1,4 +1,5 @@
 const Book = require('../model/book');
+const Author = require('../model/author')
 
 module.exports = function book_service() {
     this.add({ role: 'book', cmd: 'insert' }, async (msg, reply) => {
@@ -23,6 +24,39 @@ module.exports = function book_service() {
         try {
             const book = await Book.findAll();
             reply(null, book);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    this.add({ role: 'book', cmd: 'getByName' }, async (msg, reply) => {
+        try {
+            const book = await Book.findAll({ where: { title: msg.title } });
+            reply(null, book);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    this.add({ role: 'book', cmd: 'getByAuthor' }, async (msg, reply) => {
+        try {
+            const book = await Book.findAll({
+                include: {
+                    model: Author,
+                    required: true,
+                    where: { name: msg.name }
+                }
+            });
+            reply(null, book);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+    this.add({ role: 'book', cmd: 'getByISBN' }, async (msg, reply) => {
+        try {
+            const book = await Book.findAll({ where: { isbn: msg.isbn } });
+            reply(null,book);
         } catch (error) {
             console.log(error);
         }

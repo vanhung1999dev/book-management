@@ -33,6 +33,36 @@ module.exports.GetAll = async (req, res) => {
     }
 };
 
+module.exports.GetByName = async (req, res) => {
+    try {
+        const title = req.query.title;
+        const book = await act({ role: 'book', cmd: 'getByName', title: title });
+        res.send(book);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports.GetByAuthor = async (req, res) => {
+    try {
+        const name = req.query.name;
+        const book = await act({ role: 'book', cmd: 'getByAuthor', name: name });
+        res.send(book);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports.GetByISBN = async (req, res) => {
+    try {
+        const isbn = req.query.isbn;
+        const book = await act({ role: 'book', cmd: 'getByISBN', isbn: isbn });
+        res.send(book);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 module.exports.Update = async (req, res) => {
     try {
         const data = req.body;
