@@ -6,9 +6,7 @@ const router = Express.Router();
 
 router.post('/books', book_controller.Insert);
 router.get('/book/:id', book_controller.Get);
-router.get('/book', book_controller.GetAll);
-// router.get('/book', book_controller.GetByAuthor);
-// router.get('/book',book_controller.GetByISBN);
+router.get('/book', book_controller.FilterBook);
 router.put('/book/:id', book_controller.Update);
 router.delete('/book/:id', book_controller.Delete);
 

@@ -46,15 +46,13 @@ module.exports = function search_service() {
 
     this.add({ role: 'book', cmd: 'getByNameAndAuthor' }, async (msg, reply) => {
         try {
-            const book = await Book.findAll(
-                { where: { title: msg.title } }
-                , {
-                    include: {
-                        model: Author,
-                        required: true,
-                        where: { name: msg.name }
-                    }
-                });
+            const book = await Book.findAll({
+                where: { title: msg.title },
+                include: {
+                    model: Author,
+                    where: { name: msg.name }
+                }
+            });
             reply(null, book);
         } catch (error) {
             console.log(error);
