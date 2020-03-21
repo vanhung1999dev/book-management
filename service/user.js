@@ -50,7 +50,7 @@ module.exports = function user_service(options) {
 
     this.add({ role: 'user', cmd: 'delete' }, async (msg, reply) => {
         try {
-            const reuslt = await User.destroy({ where: { id: msg.id } });
+            const reuslt = await User.update({status:0},{ where: { id: msg.id } });
             reply(null, { fielsAffect: reuslt });
         } catch (error) {
             console.log(error);
