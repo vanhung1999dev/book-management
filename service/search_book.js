@@ -2,15 +2,6 @@ const Book = require('../model/book');
 const Author = require('../model/author')
 
 module.exports = function search_service() {
-    this.add({ role: 'book', cmd: 'get' }, async (msg, reply) => {
-        try {
-            const book = await Book.findOne({ where: { id: msg.id } });
-            reply(null, book);
-        } catch (error) {
-            console.log(error);
-        }
-    });
-
     this.add({ role: 'book', cmd: 'getAll' }, async (msg, reply) => {
         try {
             const book = await Book.findAll();
@@ -93,6 +84,23 @@ module.exports = function search_service() {
             reply(null, book);
         } catch (error) {
 
+        }
+    });
+
+    this.add({ role: 'book', cmd: 'get_by_name_isbn_author' }, async (msg, reply) => {
+        try {
+            const book = await Book.findAll(
+                { where: { title: msg.title, isbn: msg.isbn } },
+                {
+                    include: {
+                        model: Author,
+                        required: true,
+                        where: { name: msg.name }
+                    }
+                });
+            reply(null, book);
+        } catch (error) {
+            console.log(error);
         }
     });
 };

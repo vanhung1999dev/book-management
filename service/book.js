@@ -11,6 +11,15 @@ module.exports = function book_service() {
         }
     });
 
+    this.add({ role: 'book', cmd: 'get' }, async (msg, reply) => {
+        try {
+            const book = await Book.findOne({ where: { id: msg.id } });
+            reply(null, book);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
     this.add({ role: 'book', cmd: 'update' }, async (msg, reply) => {
         try {
             const result = await Book.update({
