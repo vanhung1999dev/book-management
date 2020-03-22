@@ -1,6 +1,6 @@
 const Connect = require('./connect');
 const Sequelize = require('sequelize');
-const User_Permison = require('./perimision');
+const User_Permison = require('./user_permision');
 
 const User = Connect.define('User', {
     username: { type: Sequelize.STRING, allowNull: false },
@@ -16,8 +16,8 @@ const User = Connect.define('User', {
     timestamps: false
 });
 
+Connect.sync({ force: false });
 User.hasMany(User_Permison);
 User_Permison.belongsTo(User);
-Connect.sync({ force: false });
 
 module.exports = User;

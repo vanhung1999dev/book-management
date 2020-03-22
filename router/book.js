@@ -5,9 +5,9 @@ const router = Express.Router();
 //%20 with space ,%21 for !,%2B for +,%23 for # in query paramter
 
 router.post('/books', book_controller.Insert);
-router.get('/book/:id', book_controller.Get);
-router.get('/book', book_controller.FilterBook);
-router.put('/book/:id', book_controller.Update);
-router.delete('/book/:id', book_controller.Delete);
+router.get('/books/:id', book_controller.Get);
+router.get('/books', book_controller.FilterBook);
+router.put('/books/:id', book_controller.Update);
+router.delete('/books/:id', book_controller.Delete);
 
 module.exports = router;

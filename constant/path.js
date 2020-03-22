@@ -1,36 +1,31 @@
-module.exports.list_unauthenticate_path = [
-    ["GET,/login"]
-];
 
-module.exports.list_permision= [
-
+const list_permision= [
     //account permision
-    ["POST,/accounts",1],
-    ["GET,/accounts/(\d+)",2],
-    ["GET,/accounts",3],
-    ["UPDATE,/accounts/(\d+)",4],
-    ["DELETE,'accounts/(\d+)",5]
+    {path:"^POST,/users$",id_permision:1},
+    {path:"^GET,/users/[0-9]+$",id_permision:2},
+    {path:"^GET,/users$",id_permision:3},
+    {path:"^PUT,/users/[0-9]+$",id_permision:4},
+    {path:"^DELETE,/users/[0-9]+$",id_permision:5},
 
     //author permision
-    ["POST,/authors",6],
-    ["GET,/authors/(\d+)",7],
-    ["GET,/authors",8],
-    ["UPDATE,/authors/(\d+)",9],
-    ["DELETE,'authors/(\d+)",10]
+    {path:"^POST,/authors$",id_permision:6},
+    {path:"^GET,/authors/[0-9]+$",id_permision:7},
+    {path:"^GET,/authors$",id_permision:8},
+    {path:"^PUT,/authors/[0-9]+$",id_permision:9},
+    {path:"^DELETE,/authors/[0-9]+$",id_permision:10},
 
     //book permision 
-    ["POST,/books",11],
-    ["GET,/books/(\d+)",12],
-    ["GET,/books",13],
-    ["UPDATE,/books/(\d+)",14],
-    ["DELETE,'books/(\d+)",15]
+    {path:"^POST,/books$",id_permision:11},
+    {path:"^GET,/books/[0-9]+$",id_permision:12},
+    {path:"^GET,/books$",id_permision:13},
+    {path:"^PUT,/books/[0-9]+$",id_permision:14},
+    {path:"^DELETE,/books/[0-9]+$",id_permision:15},
 
     //catelog permision
-    ["POST,/catelogs",16],
-    ["GET,/catelogs/(\d+)",17],
-    ["GET,/catelogs",18],
-    ["UPDATE,/catelogs/(\d+)",19],
-    ["DELETE,'catelogs/(\d+)",20]
-
-    
+    {path:"^POST,/catelogs$",id_permision:16},
+    {path:"^GET,/catelogs/[0-9]+$",id_permision:17},
+    {path:"^GET,/catelogs$",id_permision:18},
+    {path:"^PUT,/catelogs/[0-9]+$",id_permision:19},
+    {path:"^DELETE,/catelogs/[0-9]+$",id_permision:20}
 ]
+module.exports = list_permision;

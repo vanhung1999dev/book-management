@@ -7,7 +7,6 @@ const connect = new Sequelize('Library_Book', 'root', 'vanhung1999', {
 });
 
 const isConnect = async () => await connect.authenticated();
-if (isConnect)
-    console.log('connect succesfull!!!');
+if (isConnect) console.log('connect succesfull!!!');
 
 module.exports = connect;

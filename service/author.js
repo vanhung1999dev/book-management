@@ -21,7 +21,7 @@ module.exports = function author_service() {
 
     try {
         this.add({ role: 'author', cmd: 'getAll' }, async (msg, reply) => {
-            const authors = await Author.findOne();
+            const authors = await Author.findAll();
             reply(null, authors);
         });
     } catch (error) {
