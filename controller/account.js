@@ -6,7 +6,9 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 
 module.exports.MakeAccount = async (req, res) => {
     try {
-        const data = req.body;
+        let data = req.body;
+        data.create_by = req.id;
+        data.create_time = Date.now();
         const account = await act({ role: 'account', cmd: 'insert', data: data });
         res.send(account);
     } catch (error) {
@@ -46,8 +48,10 @@ module.exports.UpdateAccount = async (req, res) => {
 
 module.exports.BlockAccount = async (req, res) => {
     try {
+        let data = req.body;
+        data.block_time = Date.now();
         const id = req.params.id;
-        const result = await act({ role: 'account', cmd: 'block', id: id });
+        const result = await act({ role: 'account', cmd: 'block', id: id, data: data });
         res.send(result);
     } catch (error) {
         console.log(error);

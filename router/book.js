@@ -8,6 +8,7 @@ router.post('/books', book_controller.Insert);
 router.get('/books/:id', book_controller.Get);
 router.get('/books', book_controller.FilterBook);
 router.put('/books/:id', book_controller.Update);
+router.put('/books/:id/approved',book_controller.Approved);
 router.delete('/books/:id', book_controller.Delete);
 
 module.exports = router;

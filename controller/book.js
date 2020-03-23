@@ -8,6 +8,8 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
+        data.create_by = req.id;
+        data.create_time = Date.now();
         const book = await act({ role: 'book', cmd: 'insert', data: data });
         res.send(book);
     } catch (error) {
@@ -118,6 +120,20 @@ module.exports.Update = async (req, res) => {
         const data = req.body;
         const id = req.params.id;
         const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
+        res.send(result);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+module.exports.Approved = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let data = req.body;
+        data.approved_by = req.id;
+        data.approved_time = Date.now();
+
+        const result = await act({ role: 'book', cmd: 'approve', id: id, data: data });
         res.send(result);
     } catch (error) {
         console.log(error);

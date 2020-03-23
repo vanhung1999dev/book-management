@@ -34,6 +34,17 @@ module.exports = function book_service() {
         }
     });
 
+    this.add({ role: 'book', cmd: 'approve' }, async (msg, reply) => {
+        try {
+            const id = msg.id;
+            const { approved_time, approved_by } = msg.data;
+            const result = await Book.update({ status: 1, approved_time, approved_by }, { where: { id } });
+            reply(null, { fielsAffect: result });
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
     this.add({ role: 'book', cmd: 'delete' }, async (msg, reply) => {
         try {
             const reuslt = await Book.destroy({ where: { id: msg.id } });

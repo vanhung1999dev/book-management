@@ -31,9 +31,12 @@ module.exports = function catelog_service(Option) {
 
     this.add({ role: 'catelog', cmd: 'update' }, async (msg, reply) => {
         try {
+            const { last_update_time, last_update_by } = msg.data;
             const result = await Catelog.update({
                 name: msg.data.name,
-                alias: msg.data.alias
+                alias: msg.data.alias,
+                last_update_time,
+                last_update_by
             }, { where: { id: msg.id } });
             reply(null, result);
         } catch (error) {

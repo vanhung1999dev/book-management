@@ -4,15 +4,17 @@ Seneca.quiet().use(require('../service/user'));
 const Promise = require('bluebird');
 const act = Promise.promisify(Seneca.act, { context: Seneca });
 
-module.exports.Insert = async (req, res) => {
-    try {
-        const data = req.body;
-        const user = await act({ role: 'user', cmd: 'insert', data: data });
-        res.send(user);
-    } catch (error) {
-        console.log(error);
-    }
-};
+// module.exports.Insert = async (req, res) => {
+//     try {
+//         let data = req.body;
+//         data.create_time = Date.now();
+//         data.create_by = req.id;
+//         const user = await act({ role: 'user', cmd: 'insert', data: data });
+//         res.send(user);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// };
 
 module.exports.Get = async (req, res) => {
     try {
@@ -51,5 +53,26 @@ module.exports.Delete = async (req, res) => {
         res.status(200).json(result);
     } catch (error) {
         console.log(err)
+    }
+};
+
+module.exports.GrantPermision = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let data = req.body;
+        data.create_by = req.name;
+        data.create_time = Date.now();
+        data.Userid = id;
+
+        const user = await User.findOne({ where: { id } });
+
+        if (user) {
+            const permision = await act({ role: 'user', cmd: 'grant permision', data: data });
+            res.send(permision);
+        } else
+            res.send('user not exsist to grant');
+
+    } catch (error) {
+        console.log(error);
     }
 };

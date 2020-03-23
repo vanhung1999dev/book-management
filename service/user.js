@@ -1,5 +1,6 @@
 const seneca = require('seneca')();
 const User = require('../model/user');
+const Permision = require('../model/user_permision');
 
 module.exports = function user_service(options) {
     this.add({ role: 'user', cmd: 'insert' }, async (msg, reply) => {
@@ -36,13 +37,9 @@ module.exports = function user_service(options) {
                     fullname: msg.data.fullname,
                     email: msg.data.email,
                     status: msg.data.status,
-                    block_massage: msg.data.block_massage,
-                    block_time: msg.data.block_time,
-                    create_time: msg.data.create_time,
-                    create_by: msg.data.create_by
                 },
                 { where: { id: msg.id } });
-            reply(null, {fiedAffected: result});
+            reply(null, { fiedAffected: result });
         } catch (error) {
             console.log(error);
         }
@@ -50,10 +47,19 @@ module.exports = function user_service(options) {
 
     this.add({ role: 'user', cmd: 'delete' }, async (msg, reply) => {
         try {
-            const reuslt = await User.update({status:0},{ where: { id: msg.id } });
+            const reuslt = await User.update({ status: 0 }, { where: { id: msg.id } });
             reply(null, { fielsAffect: reuslt });
         } catch (error) {
             console.log(error);
         }
     });
+
+    this.add({ role: 'user', cmd: 'grant permision' }, async (msg, reply) => {
+        try {
+            const permisons = await Permision.create(msg.data);
+            reply(null, permisons);
+        } catch (error) {
+            console.log(error);
+        }
+    })
 };
