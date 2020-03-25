@@ -28,6 +28,7 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
             const payload = jwt.decode(req.token);
             console.log('payload', payload);
             req.id = payload.id;
+            console.log('req.id:',req.id);
 
             const http_method = req.method;
             const current_path = http_method + "," + path_name;

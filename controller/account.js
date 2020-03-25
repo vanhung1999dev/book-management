@@ -8,7 +8,8 @@ module.exports.MakeAccount = async (req, res) => {
     try {
         let data = req.body;
         data.create_by = req.id;
-        data.create_time = Date.now();
+        //data.create_time = Date.now();
+        console.log('date:',Date.now());
         const account = await act({ role: 'account', cmd: 'insert', data: data });
         res.send(account);
     } catch (error) {
@@ -48,8 +49,9 @@ module.exports.UpdateAccount = async (req, res) => {
 
 module.exports.BlockAccount = async (req, res) => {
     try {
+        console.log("haha");
         let data = req.body;
-        data.block_time = Date.now();
+        //data.block_time = Date.now();
         const id = req.params.id;
         const result = await act({ role: 'account', cmd: 'block', id: id, data: data });
         res.send(result);

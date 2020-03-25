@@ -34,10 +34,10 @@ const list_permision = [
     { path: "^GET,/accounts/[0-9]+$", id_permision: 23 },
     { path: "^GET,/accounts$", id_permision: 24 },
     { path: "^PUT,/accounts/[0-9]+$", id_permision: 25 },
-    { path: "^PUT,/accounts/[0-9]+$", id_permision: 26 },
+    { path: "^DELETE,/accounts/[0-9]+$", id_permision: 26 },
 
     //grant permision
-    { path: "^POST,permision/[0-9]+$", id_permision: 27 }
+    { path: "^POST,/permisions/[0-9]+$", id_permision: 27 }
 
 ]
 module.exports = list_permision;

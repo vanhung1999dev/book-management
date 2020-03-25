@@ -25,7 +25,7 @@ module.exports = function book_service() {
             const result = await Book.update({
                 title: msg.data.title,
                 isbn: msg.data.isbn,
-                status: msg.data.status,
+                status: 1,
                 description: msg.data.description
             }, { where: { id: msg.id } });
             reply(null, { fielsAffect: result });

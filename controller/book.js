@@ -8,10 +8,13 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
-        data.create_by = req.id;
-        data.create_time = Date.now();
-        const book = await act({ role: 'book', cmd: 'insert', data: data });
-        res.send(book);
+        if (data.status == 0) {
+            data.create_by = req.id;
+            // data.create_time = Date.now();
+            const book = await act({ role: 'book', cmd: 'insert', data: data });
+            res.send(book);
+        } else
+            res.send('book was approved');
     } catch (error) {
         console.log(error);
     }
@@ -117,10 +120,15 @@ module.exports.FilterBook = async (req, res) => {
 
 module.exports.Update = async (req, res) => {
     try {
-        const data = req.body;
         const id = req.params.id;
-        const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
-        res.send(result);
+        const book = await act({ role: 'book', cmd: 'get', id: id });
+
+        if (book.status == 0) {
+            const data = req.body;
+            const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
+            res.send(result);
+        } else
+            res.send('book was approve by' + book.approved_by);
     } catch (error) {
         console.log(error);
     }
@@ -131,7 +139,7 @@ module.exports.Approved = async (req, res) => {
         const id = req.params.id;
         let data = req.body;
         data.approved_by = req.id;
-        data.approved_time = Date.now();
+        //data.approved_time = Date.now();
 
         const result = await act({ role: 'book', cmd: 'approve', id: id, data: data });
         res.send(result);
