@@ -28,7 +28,7 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
             const payload = jwt.decode(req.token);
             console.log('payload', payload);
             req.id = payload.id;
-            console.log('req.id:',req.id);
+            console.log('req.id:', req.id);
 
             const http_method = req.method;
             const current_path = http_method + "," + path_name;
@@ -42,7 +42,9 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
                 if (permision_pattern.test(current_path)) {
                     console.log('result matching:', permision_pattern.test(current_path));
                     const id = list_permision[i].id_permision;//get permision id to compare
-                    const isPermision = Permision.findOne({ where: { permision_id: id, Userid: payload.id } });
+                    console.log('permision_id:', id);
+                    const isPermision = await Permision.findOne({ where: { permision_id: id, Userid: payload.id } });
+                    console.log('permision', isPermision);
                     if (isPermision)
                         count++;
                 }
@@ -52,7 +54,7 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
             if (count > 0)
                 next();
             else
-                throw new Error('you dont have permision with action');
+                res.send('you dont have permision with action');
         }
     } catch (error) {
         console.log(error);
