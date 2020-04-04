@@ -13,4 +13,4 @@ app.use(require('./router/book'));
 app.use(require('./router/catelog'));
 app.use(require('./router/author'));
 
-app.listen(3000);
+app.listen(3000,()=> console.log('server working....'));
