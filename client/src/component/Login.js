@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import '../Css/Login.css'
+import Axios from 'axios'
 
-export class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props)
 
@@ -31,10 +31,16 @@ export class Login extends Component {
         } else return true;
     }
 
+    login = async () => {
+        const { username, password } = this.state;
+        // const info = { username, password };
+        const respond = await Axios.post('http://localhost:3000/login', { username, password });
+        console.log('res:', respond);
+    }
+
     handleSubmit = (event) => {
         event.preventDefault();
-        if (this.isValidateField())
-            console.log(this.state);
+        this.login();
 
     }
 
@@ -61,4 +67,4 @@ export class Login extends Component {
     }
 }
 
-export default Login
+export default Login;
