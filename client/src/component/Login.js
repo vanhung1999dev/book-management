@@ -1,70 +1,77 @@
+// import React, { Component } from 'react';
+// import { makeStyles } from '@material-ui/core/styles';
+// import TextField from '@material-ui/core/TextField';
+// import Button from '@material-ui/core/Button';
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     '& > *': {
+//       margin: theme.spacing(2),
+//       width: '25ch',
+//     }
+//   },
+// }));
+
+// class Login extends Component() {
+//   // const classes = useStyles();
+
+//   render() {
+//     return (
+//       <div>
+//         <h1>Dang Nhap</h1>
+//         <TextField id="username" label="Username" /><br></br>
+//         <TextField id="password" label="Password" /><br></br>
+//         <Button variant="contained" color="primary">Login</Button>
+//       </div>
+//     )
+//   }
+// }
+
+// export default Login;
 import React, { Component } from 'react'
-import Axios from 'axios'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import '../Css/login.css';
+import Axios from 'axios';
 
-class Login extends Component {
-    constructor(props) {
-        super(props)
+export class Login extends Component {
 
-        this.state = {
-            username: '',
-            password: '',
-            errorUserName: '',
-            errorPassword: ''
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
     }
+  }
 
-    handleInput = (event) => {
-        this.setState({ [event.target.name]: event.target.value })
-    }
+  handleInput = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
 
-    isValidateField = () => {
-        // const emptyPattern = new RegExp('^(\s)+$');
-        // console.log('pattern', emptyPattern);
-        if (this.state.username === '' && this.state.password === '') {
-            this.setState({ errorUserName: 'username not be empty', errorPassword: 'password not be emtpy' });
-            return false;
-        } else if (this.state.username === '') {
-            this.setState({ errorUserName: 'username not be empty' });
-            return false;
-        } else if (this.state.password === '') {
-            this.setState({ errorPassword: 'password not be emtpy' })
-        } else return true;
-    }
-
-    login = async () => {
-        const { username, password } = this.state;
-        // const info = { username, password };
-        const respond = await Axios.post('http://localhost:3000/login', { username, password });
+  login = async () => {
+    const { username, password } = this.state;
+    const respond = await Axios.post('http://localhost:3000/login', { username, password });
         console.log('res:', respond);
-    }
+  }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.login();
-
-    }
-
-    render() {
-        return (
-            <div className="login-form">
-                <form>
-                    <h1 className="title">Login</h1>
-
-                    <div style={{ color: "orange", fontSize: 25 }}>{this.state.errorUserName}</div>
-                    <label className="username">UserName:</label><br />
-                    <input type="text" name="username" onChange={this.handleInput} />
-                    <hr></hr>
-
-                    <div style={{ color: "orange", fontSize: 25 }}>{this.state.errorPassword}</div>
-                    <label className="password">Password:</label><br />
-                    <input type="password" name="password" onChange={this.handleInput} />
-                    <hr></hr>
-
-                    <button onClick={this.handleSubmit}>Login</button>
-                </form>
-            </div>
-        )
-    }
+  handleLogin = (event) => {
+    event.preventDefault();
+    this.login();
 }
 
-export default Login;
+
+  render() {
+    return (
+      <div className="login-form">
+        <h1>Dang Nhap</h1>
+        <TextField name="username" label="Username" onChange={this.handleInput} /><br></br><br></br>
+        <TextField name="password" label="Password" onChange={this.handleInput} /><br></br><br></br>
+        <Button variant="contained" color="primary" onClick={this.handleLogin} >
+          Login
+        </Button>
+      </div>
+    )
+  }
+}
+
+export default Login

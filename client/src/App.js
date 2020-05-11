@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import MainRouter from '../src/Component/MainRouter';
+import Login from './Component/Login'
 
-const App = () => (
-  <BrowserRouter>
-    <MainRouter />
-  </BrowserRouter>
-);
+function App() {
+  return (
+    <div className="App">
+      <Login />
+    </div>
+  );
+}
 
 export default App;

@@ -4,24 +4,23 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
 module.exports.Login = async (req, res) => {
     try {
         const { username, password } = req.body;
-        console.log(req);
+        console.log("body",req.body);
 
         const user = await User.findOne({ where: { username } });
         const match = await bcrypt.compare(password, user.password);
         
         if (!match)
-            res.send('not valid password')
+            res.status(404).json({err: 'not valid password'})
         else if (user.status == 0)
-            res.send('user was blocked');
+            res.status(404).json({err: 'user was block'});
         else if (user) {
             const token = jwt.sign({ id: user.id, name: user.username }, process.env.secret_key);
             res.send(token);
         } else
-            res.send('invalid username or password,,please check again');
+            res.status(404).json('invalid username or password');
     } catch (error) {
         console.log(error);
     }

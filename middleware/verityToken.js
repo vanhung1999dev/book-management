@@ -7,10 +7,14 @@ const Permision = require('../model/user_permision');
 module.exports.verifyToken_authorization = async (req, res, next) => {
     try {
         const path_name = url.parse(req.url).pathname;
+        console.log("path name:", path_name);
         const login_pattern = new RegExp('/login');
+        const mainPagePattern = new RegExp('/mainpage');
 
-        //path login dont need authenticate
-        if (login_pattern.test(path_name))
+        //path login don't need authenticate
+        console.log("login", login_pattern.test(path_name));
+        console.log("main page:", mainPagePattern.test(path_name));
+        if (login_pattern.test(path_name) || mainPagePattern.test(path_name))
             next();
         else {
             // authenticate user

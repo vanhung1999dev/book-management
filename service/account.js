@@ -15,7 +15,6 @@ module.exports = function account_service() {
     } catch (error) {
         console.log('error');
     }
-
     try {
         this.add({ role: 'account', cmd: 'get' }, async (msg, reply) => {
             const id = msg.id;
