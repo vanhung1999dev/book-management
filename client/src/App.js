@@ -1,10 +1,10 @@
 import React from 'react';
-import Login from './Component/Login'
+import MainPage from './Component/MainPage'
 
 function App() {
   return (
     <div className="App">
-      <Login />
+      <MainPage />
     </div>
   );
 }
