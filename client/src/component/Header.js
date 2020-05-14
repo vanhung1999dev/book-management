@@ -16,6 +16,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -108,6 +109,15 @@ export default function ButtonAppBar() {
         setAnchorEl(null);
     };
 
+    localStorage.setItem('isLogin', false);
+    const history = useHistory();
+    const handleLogin = () => {
+        if (localStorage.getItem('isLogin')) {
+            console.log('it work');
+            history.push('/login');
+        }
+    }
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -120,7 +130,7 @@ export default function ButtonAppBar() {
                             color="primary"
                             onClick={handleClick}
                         >
-                            Open Menu
+                            abc
                         </Button>
                         <StyledMenu
                             id="customized-menu"
@@ -168,7 +178,7 @@ export default function ButtonAppBar() {
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            // onClick={handleMenu} not catch event
+                            onClick={handleLogin}
                             color="inherit"
                         >
                             <AccountCircle />
