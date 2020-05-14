@@ -1,3 +1,4 @@
+// import Typography from '@material-ui/core/Typography'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -17,7 +18,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-
+const jwt = require('jsonwebtoken');
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -109,14 +110,22 @@ export default function ButtonAppBar() {
         setAnchorEl(null);
     };
 
-    localStorage.setItem('isLogin', false);
+    let isLogged = localStorage.getItem('isLogin');
+    console.log('isLogged start:', isLogged);
+
     const history = useHistory();
     const handleLogin = () => {
-        if (localStorage.getItem('isLogin')) {
+        if (!isLogged) {
             console.log('it work');
             history.push('/login');
         }
     }
+
+    let name;
+    if (isLogged) {
+        name = jwt.decode(localStorage.getItem('jwt')).name;
+    }
+    console.log('name:', name);
 
     return (
         <div className={classes.root}>
@@ -133,7 +142,7 @@ export default function ButtonAppBar() {
                             abc
                         </Button>
                         <StyledMenu
-                            id="customized-menu"
+                            id="customized"
                             anchorEl={anchorEl}
                             keepMounted
                             open={Boolean(anchorEl)}
@@ -143,7 +152,7 @@ export default function ButtonAppBar() {
                                 <ListItemIcon>
                                     <SendIcon fontSize="small" />
                                 </ListItemIcon>
-                                <ListItemText primary="Sent mail" />
+                                <ListItemText primary="" />
                             </StyledMenuItem>
                             <StyledMenuItem>
                                 <ListItemIcon>
@@ -173,17 +182,60 @@ export default function ButtonAppBar() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </div>
-                    <div>
-                        <IconButton
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleLogin}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
+
+                    <>
+                        {
+                            isLogged ?
+                                <div>
+                                    <IconButton
+                                        aria-label="account of current user"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        onClick={handleClick}
+                                        color="inherit"
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                    <StyledMenu
+                                        id="customized-menu"
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                    >
+                                        <StyledMenuItem>
+                                            <ListItemIcon>
+                                                <SendIcon fontSize="small" />
+                                            </ListItemIcon>
+                                            <ListItemText primary={name}></ListItemText>
+                                        </StyledMenuItem>
+                                        <StyledMenuItem>
+                                            <ListItemIcon>
+                                                <DraftsIcon fontSize="small" />
+                                            </ListItemIcon>
+                                            <ListItemText primary="Drafts" />
+                                        </StyledMenuItem>
+                                        <StyledMenuItem>
+                                            <ListItemIcon>
+                                                <InboxIcon fontSize="small" />
+                                            </ListItemIcon>
+                                            <ListItemText primary="Inbox" />
+                                        </StyledMenuItem>
+                                    </StyledMenu>
+                                </div> :
+                                <div>
+                                    <IconButton
+                                        aria-label="account of current user"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        onClick={handleLogin}
+                                        color="inherit"
+                                    >
+                                        <AccountCircle />
+                                    </IconButton>
+                                </div>
+                        }
+                    </>
                 </Toolbar>
             </AppBar>
         </div>
