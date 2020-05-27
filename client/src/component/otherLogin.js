@@ -19,7 +19,7 @@ const OtherLogin = () => {
 
     const history = useHistory();
     const handleLogin = async () => {
-        const respond = await Axios.post('http://localhost:3000/login', { username, password });
+        const respond = await Axios.post('http://localhost:3001/login', { username, password });
         console.log('res:', respond);
         if (respond.status === 200) {
             localStorage.setItem('isLogin', true);

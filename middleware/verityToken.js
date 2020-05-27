@@ -6,26 +6,29 @@ const Permision = require('../model/user_permision');
 
 module.exports.verifyToken_authorization = async (req, res, next) => {
     try {
+        console.log(req.headers);
         const path_name = url.parse(req.url).pathname;
-        console.log("path name:", path_name);
         const login_pattern = new RegExp('/login');
-        const mainPagePattern = new RegExp('/mainpage');
 
         //path login don't need authenticate
         console.log("login", login_pattern.test(path_name));
-        console.log("main page:", mainPagePattern.test(path_name));
-        if (login_pattern.test(path_name) || mainPagePattern.test(path_name))
+        if (login_pattern.test(path_name)) {
             next();
+        }
         else {
+            
             // authenticate user
-            var beareHeader = req.headers['authorization'];
-            if (beareHeader) {
-                const token = beareHeader.split(" ")[1];
+            let bearerHeader = req.headers['authorization'];
+            console.log('bearerHeader:',bearerHeader);
+            if (bearerHeader) {
+                const token = bearerHeader.split(" ")[1];
                 req.token = token
 
                 jwt.verify(req.token, process.env.secret_key, (err, data) => {
                     if (err) res.json('Token is not verify');
                 })
+            }else{
+                console.log('do not have token');
             }
 
             //check authorization of user
@@ -42,6 +45,7 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
             for (i = 0; i < list_permision.length; i++) {
                 const permision_pattern = new RegExp(list_permision[i].path);
                 console.log('permision pattern:', permision_pattern);
+                
 
                 if (permision_pattern.test(current_path)) {
                     console.log('result matching:', permision_pattern.test(current_path));
@@ -53,13 +57,15 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
                         count++;
                 }
             }
+
             //check user have this permision
             console.log('count', count);
             if (count > 0)
                 next();
             else
-                res.send('you dont have permision with action');
+                res.send('you don not have permision with action');
         }
+
     } catch (error) {
         console.log(error);
     }

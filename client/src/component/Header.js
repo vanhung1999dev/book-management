@@ -1,4 +1,3 @@
-// import Typography from '@material-ui/core/Typography'
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,6 +17,7 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import Axios from 'axios';
 const jwt = require('jsonwebtoken');
 
 const useStyles = makeStyles((theme) => ({
@@ -106,6 +106,18 @@ export default function ButtonAppBar() {
         setAnchorEl(event.currentTarget);
     };
 
+    const [item, setItem] = React.useState([]);
+    const handleCatalogs = async () => {
+        const { data } = await Axios.get('http://localhost:3001/catelogs', {
+            headers: {
+                authorization: `bearer ${localStorage.getItem('jwt')}`
+            }
+        })
+
+        setItem([...item,data]);
+        console.log(item);
+    }
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -125,7 +137,6 @@ export default function ButtonAppBar() {
     if (isLogged) {
         name = jwt.decode(localStorage.getItem('jwt')).name;
     }
-    console.log('name:', name);
 
     return (
         <div className={classes.root}>
@@ -137,9 +148,9 @@ export default function ButtonAppBar() {
                             aria-haspopup="true"
                             variant="contained"
                             color="primary"
-                            onClick={handleClick}
+                            onClick={handleCatalogs}
                         >
-                            abc
+                            catalog
                         </Button>
                         <StyledMenu
                             id="customized"
@@ -148,24 +159,13 @@ export default function ButtonAppBar() {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <StyledMenuItem>
-                                <ListItemIcon>
-                                    <SendIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText primary="" />
-                            </StyledMenuItem>
-                            <StyledMenuItem>
-                                <ListItemIcon>
-                                    <DraftsIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText primary="Drafts" />
-                            </StyledMenuItem>
-                            <StyledMenuItem>
-                                <ListItemIcon>
-                                    <InboxIcon fontSize="small" />
-                                </ListItemIcon>
-                                <ListItemText primary="Inbox" />
-                            </StyledMenuItem>
+                            {
+                                item.map(item => (
+                                    <StyledMenuItem key={item.id}>
+                                        <ListItemText primary={item.name}></ListItemText>
+                                    </StyledMenuItem>
+                                ))
+                            }
                         </StyledMenu>
                     </div>
 
@@ -238,7 +238,6 @@ export default function ButtonAppBar() {
                     </>
                 </Toolbar>
             </AppBar>
-        </div>
+        </div >
     );
 }
-
