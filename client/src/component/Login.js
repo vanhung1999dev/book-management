@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import Axios from 'axios';
 import '../Css/login.css';
 
-const OtherLogin = () => {
+const Login = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
 
@@ -42,4 +42,4 @@ const OtherLogin = () => {
     )
 }
 
-export default OtherLogin
+export default Login

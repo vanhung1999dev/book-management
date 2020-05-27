@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -7,7 +7,6 @@ import InputBase from '@material-ui/core/InputBase';
 import { fade } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import IconButton from '@material-ui/core/IconButton';
-import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -17,6 +16,8 @@ import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
 import { withStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Axios from 'axios';
 const jwt = require('jsonwebtoken');
 
@@ -102,73 +103,40 @@ export default function ButtonAppBar() {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
+    // const handleClick = (event) => {
+    //     setAnchorEl(event.currentTarget);
+    // };
 
-    const [item, setItem] = React.useState([]);
+    const [item, setItem] = React.useState(['heh','hhk']);
     const handleCatalogs = async () => {
         const { data } = await Axios.get('http://localhost:3001/catelogs', {
             headers: {
                 authorization: `bearer ${localStorage.getItem('jwt')}`
             }
         })
-
-        setItem([...item,data]);
+        setItem(data);
         console.log(item);
     }
 
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    // useEffect(() => {
+    //     handleCatalogs();
+    // },[])
 
-    let isLogged = localStorage.getItem('isLogin');
-    console.log('isLogged start:', isLogged);
-
-    const history = useHistory();
-    const handleLogin = () => {
-        if (!isLogged) {
-            console.log('it work');
-            history.push('/login');
-        }
-    }
-
-    let name;
-    if (isLogged) {
-        name = jwt.decode(localStorage.getItem('jwt')).name;
-    }
+    // const handleClose = () => {
+    //     setAnchorEl(null);
+    // };
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <div>
-                        <Button
-                            aria-controls="customized-menu"
-                            aria-haspopup="true"
-                            variant="contained"
-                            color="primary"
-                            onClick={handleCatalogs}
-                        >
-                            catalog
-                        </Button>
-                        <StyledMenu
-                            id="customized"
-                            anchorEl={anchorEl}
-                            keepMounted
-                            open={Boolean(anchorEl)}
-                            onClose={handleClose}
-                        >
-                            {
-                                item.map(item => (
-                                    <StyledMenuItem key={item.id}>
-                                        <ListItemText primary={item.name}></ListItemText>
-                                    </StyledMenuItem>
-                                ))
-                            }
-                        </StyledMenu>
-                    </div>
-
+                        <Autocomplete
+                            id="combo-box-demo"
+                            options={item}
+                            getOptionLabel={(option) => option.title}
+                            style={{ width: 300 }}
+                            renderInput={(params) => <TextField {...params} label="Catalogs" variant="outlined" />}
+                        />
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -183,59 +151,7 @@ export default function ButtonAppBar() {
                         />
                     </div>
 
-                    <>
-                        {
-                            isLogged ?
-                                <div>
-                                    <IconButton
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleClick}
-                                        color="inherit"
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                    <StyledMenu
-                                        id="customized-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                    >
-                                        <StyledMenuItem>
-                                            <ListItemIcon>
-                                                <SendIcon fontSize="small" />
-                                            </ListItemIcon>
-                                            <ListItemText primary={name}></ListItemText>
-                                        </StyledMenuItem>
-                                        <StyledMenuItem>
-                                            <ListItemIcon>
-                                                <DraftsIcon fontSize="small" />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Drafts" />
-                                        </StyledMenuItem>
-                                        <StyledMenuItem>
-                                            <ListItemIcon>
-                                                <InboxIcon fontSize="small" />
-                                            </ListItemIcon>
-                                            <ListItemText primary="Inbox" />
-                                        </StyledMenuItem>
-                                    </StyledMenu>
-                                </div> :
-                                <div>
-                                    <IconButton
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleLogin}
-                                        color="inherit"
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                </div>
-                        }
-                    </>
+                    
                 </Toolbar>
             </AppBar>
         </div >
