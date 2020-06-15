@@ -1,13 +1,23 @@
-import React from 'react'
-// import Header from './Header'
-// import Login from './Login'
-
+import React, { useState } from 'react'
 import AppBarHeader from '../Header/AppBarHeader';
+import BodyContainer from '../Body/BodyContainer';
+import ChipsArray from '../Header/ChipsArray';
 
 function MainPage() {
+
+    const [selectedItem, setSelectedItem] = useState([]);
+
+    let check = true;
+    if (selectedItem.length === 0)
+        check = false;
+
     return (
         <div>
-            <AppBarHeader />
+            <AppBarHeader selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+
+            {check ? <ChipsArray selectedItem={selectedItem} setSelectedItem={setSelectedItem} /> : ''}
+
+            <BodyContainer />
         </div>
     )
 }
