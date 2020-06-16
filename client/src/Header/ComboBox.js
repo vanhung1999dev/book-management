@@ -8,13 +8,13 @@ export default function ComboBox(props) {
   const [item, setItem] = React.useState([]);
   const { selectedItem, setSelectedItem } = props;
 
-  const onHandleSelectedItemChange = (e, value) => {   
-    if (item.filter(catalog => catalog.name === value).length !== 0) {    
-        setSelectedItem([...selectedItem,value]);
+  const onHandleSelectedItemChange = (e, value) => {
+    if (selectedItem.filter(catalog => catalog === value).length === 0) {
+      setSelectedItem([...selectedItem, value]);
     }
   };
 
-  console.log('selected item array:',selectedItem);
+  console.log('selected item array:', selectedItem);
 
   const handleCatalogs = async () => {
     const { data } = await Axios.get('http://localhost:3001/catelogs', {

@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ChipsArray(props) {
     const classes = useStyles();
 
-    const { selectedItem,setSelectedItem } = props;
+    const { selectedItem, setSelectedItem } = props;
 
     const [catalog, setCatalog] = React.useState([]);
 
@@ -39,15 +39,15 @@ export default function ChipsArray(props) {
         handleCatalogs();
     }, [])
 
-    console.log('selected item before handle Delete',selectedItem);
-
-    const handleDelete = (catalogToOff) => () => { 
-        if(catalog.filter(cata => cata.name === catalogToOff.name).length !== 0 ){
-            setSelectedItem([...selectedItem,catalogToOff.name]);
+    const handleDelete = (catalogToOff) => () => {
+        if (selectedItem.filter(catalog => catalog === catalogToOff.name).length === 0) {
+            setSelectedItem([...selectedItem, catalogToOff.name]);
+        }else {
+            setSelectedItem(selectedItem => selectedItem.filter(catalog => catalog !== catalogToOff.name));
         }
-    }    
-       
-    console.log('selected item after handle Delete',selectedItem);
+    }
+
+    console.log('selected item after handle Delete', selectedItem);
 
     return (
         <div>
