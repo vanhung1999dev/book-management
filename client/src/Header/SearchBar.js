@@ -48,8 +48,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar(props) {
     const classes = useStyles();
+
+    const { filter, setFilter } = props;
+
+    const handleChange = (e) => {
+        setFilter(e.target.value);
+    }
+    console.log('filter',filter);
 
     return (
         <div className={classes.root}>
@@ -65,6 +72,7 @@ export default function SearchAppBar() {
                     }}
                     inputProps={{ 'aria-label': 'search' }}
                     type = "search"
+                    onChange={handleChange}
                 />
             </div>
         </div>

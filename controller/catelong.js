@@ -7,7 +7,7 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 module.exports.Insert = async (req, res) => {
     try {
         let data = req.body;
-       // data.create_time = Date.now();
+        // data.create_time = Date.now();
         data.create_by = req.id;
         const catelog = await act({ role: 'catelog', cmd: 'insert', data: data });
         res.send(catelog);
@@ -26,20 +26,20 @@ module.exports.Get = async (req, res) => {
     }
 };
 
-module.exports.GetAll = async (req, res) => {
-    try {
-        const catelogs = await act({ role: 'catelog', cmd: 'getAll' });
-        res.send(catelogs);
-    } catch (error) {
-        console.log(error);
-    }
+module.exports.GetAll = async (req, res) => {  
+        try {
+            const catelogs = await act({ role: 'catelog', cmd: 'getAll' });
+            res.send(catelogs);
+        } catch (error) {
+            console.log(error);
+        }
 };
 
 module.exports.Update = async (req, res) => {
     try {
         const id = req.params.id;
         let data = req.body;
-       // data.last_update_time = Date.now();
+        // data.last_update_time = Date.now();
         data.last_update_by = req.id;
         const result = await act({ role: 'catelog', cmd: 'update', data: data, id: id });
         res.send(result);

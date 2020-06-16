@@ -6,6 +6,7 @@ import ChipsArray from '../Header/ChipsArray';
 function MainPage() {
 
     const [selectedItem, setSelectedItem] = useState([]);
+    const [filter, setFilter] = useState([]);
 
     let check = true;
     if (selectedItem.length === 0)
@@ -13,11 +14,14 @@ function MainPage() {
 
     return (
         <div>
-            <AppBarHeader selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+            <AppBarHeader
+                selectedItem={selectedItem} setSelectedItem={setSelectedItem}
+                filter={filter} setFilter={setFilter}
+            />
 
             {check ? <ChipsArray selectedItem={selectedItem} setSelectedItem={setSelectedItem} /> : ''}
 
-            <BodyContainer />
+            <BodyContainer selectedItem={selectedItem} filter={filter}/>
         </div>
     )
 }

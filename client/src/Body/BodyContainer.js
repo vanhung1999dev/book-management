@@ -1,12 +1,13 @@
-import React, {useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 
-function BodyContainer() {
+function BodyContainer(props) {
 
-    const [books,setBooks] = useState([]);
+    const [books, setBooks] = useState([]);
+    const { selectedItem, setSelectedItem, filter, setFilter } = props;
 
     const getBooks = async () => {
-        const {data} = await Axios.get('http://localhost:3001/books',{
+        const { data } = await Axios.get(`http://localhost:3001/books`, {
             headers: {
                 authorization: `bearer ${localStorage.getItem('jwt')}`
             }
@@ -16,11 +17,11 @@ function BodyContainer() {
 
     useEffect(() => {
         getBooks();
-    },[]);
+    }, [selectedItem,filter]);
 
     return (
         <div>
-            {books.map(book => <h1 key = {book.isbn}>{book.title}  {book.description}</h1>)}
+            {books.map(book => <h1 key={book.isbn}>{book.title}  {book.description}</h1>)}
         </div>
     )
 }

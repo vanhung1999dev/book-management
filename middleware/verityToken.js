@@ -6,7 +6,6 @@ const Permision = require('../model/user_permision');
 
 module.exports.verifyToken_authorization = async (req, res, next) => {
     try {
-        console.log(req.headers);
         const path_name = url.parse(req.url).pathname;
         const login_pattern = new RegExp('/login');
 
@@ -33,26 +32,18 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
 
             //check authorization of user
             const payload = jwt.decode(req.token);
-            console.log('payload', payload);
             req.id = payload.id;
-            console.log('req.id:', req.id);
 
             const http_method = req.method;
             const current_path = http_method + "," + path_name;
-            console.log('current path:', current_path);
             let count = 0;
 
             for (i = 0; i < list_permision.length; i++) {
                 const permision_pattern = new RegExp(list_permision[i].path);
-                console.log('permision pattern:', permision_pattern);
-                
 
                 if (permision_pattern.test(current_path)) {
-                    console.log('result matching:', permision_pattern.test(current_path));
                     const id = list_permision[i].id_permision;//get permision id to compare
-                    console.log('permision_id:', id);
                     const isPermision = await Permision.findOne({ where: { permision_id: id, Userid: payload.id } });
-                    console.log('permision', isPermision);
                     if (isPermision)
                         count++;
                 }

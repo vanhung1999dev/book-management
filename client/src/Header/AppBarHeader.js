@@ -21,19 +21,24 @@ export default function AppBarHeader(props) {
   const classes = useStyles();
 
   const { selectedItem, setSelectedItem } = props;
+  const { filter, setFilter } = props;
 
-  
+
 
   return (
     <div className={classes.root}>
       <AppBar position="static" >
         <Toolbar >
+
           <Typography variant="h6">
-            <ComboBox width="200px" selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
+            <ComboBox width="200px"
+              selectedItem={selectedItem} setSelectedItem={setSelectedItem} />
           </Typography>
+
           <Typography variant="h6" align="left" padding-left="800px" >
-            <SearchBar />
+            <SearchBar  filter={filter} setFilter={setFilter} />
           </Typography>
+
           <Typography variant="h6" className={classes.title} align="right">
             <Account />
           </Typography>

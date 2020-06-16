@@ -1,4 +1,5 @@
 const Catelog = require('../model/catelog');
+const Book = require('../model/book');
 const Seneca = require('seneca')();
 
 module.exports = function catelog_service(Option) {
