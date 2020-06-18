@@ -6,21 +6,19 @@ function BodyContainer(props) {
     const [books, setBooks] = useState([]);
     const { selectedItem, setSelectedItem, filter, setFilter } = props;
 
-    const getBooks = async () => {
+    const filterBooks = async () => {
         const { data } = await Axios.get(`http://localhost:3001/books?name=${selectedItem}&&title=${filter}`, {
             headers: {
                 authorization: `bearer ${localStorage.getItem('jwt')}`
             }
         });
         setBooks(data);
-        console.log('name catalog:',selectedItem);
-        console.log('filter',filter);
         console.log('Book :', data);
     }
 
     useEffect(() => {
-        getBooks();
-    }, [selectedItem, filter]);
+        filterBooks();
+    }, [selectedItem,filter]);
 
     if (books.length === 0)
         return (
