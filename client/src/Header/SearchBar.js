@@ -56,7 +56,6 @@ export default function SearchAppBar(props) {
     const handleChange = (e) => {
         setFilter(e.target.value);
     }
-    console.log('filter',filter);
 
     return (
         <div className={classes.root}>

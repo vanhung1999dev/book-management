@@ -52,12 +52,10 @@ export default function Account() {
     };
 
     let isLogged = localStorage.getItem('isLogin');
-    console.log('isLogged start:', isLogged);
 
     const history = useHistory();
     const handleLogin = () => {
         if (!isLogged) {
-            console.log('it work');
             history.push('/login');
         }
     }

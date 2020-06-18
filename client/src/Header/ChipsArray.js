@@ -47,7 +47,7 @@ export default function ChipsArray(props) {
         }
     }
 
-    console.log('selected item after handle Delete', selectedItem);
+    console.log('selectedItem at chip Array:', selectedItem);
 
     return (
         <div>

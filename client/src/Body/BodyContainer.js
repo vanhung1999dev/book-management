@@ -23,12 +23,12 @@ function BodyContainer(props) {
 
     if (books.length === 0)
         return (
-            <div>No book</div>
+            <div><h1 style = {{padding:"200"}}>No Book</h1></div>
         )
     else
         return (
             <div>
-                {books.map(book => <ViewBook book={book} />)}
+                {books.map(book => <ViewBook key = {book.id} book={book} />)}
             </div>
         )
 }

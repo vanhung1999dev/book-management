@@ -14,7 +14,7 @@ export default function ComboBox(props) {
     }
   };
 
-  console.log('selected item array:', selectedItem);
+  console.log('selectedItem at comBoBox:',selectedItem);
 
   const handleCatalogs = async () => {
     const { data } = await Axios.get('http://localhost:3001/catelogs', {

@@ -21,7 +21,8 @@ function MainPage() {
 
             {check ? <ChipsArray selectedItem={selectedItem} setSelectedItem={setSelectedItem} /> : ''}
 
-            <BodyContainer selectedItem={selectedItem} filter={filter}/>
+            <BodyContainer selectedItem={selectedItem} setSelectedItem={setSelectedItem}
+                filter={filter} setFilter={setFilter} />
         </div>
     )
 }
