@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
+import ViewBook from './ViewBook';
 
 function BodyContainer(props) {
 
@@ -18,16 +19,16 @@ function BodyContainer(props) {
 
     useEffect(() => {
         filterBooks();
-    }, [selectedItem,filter]);
+    }, [selectedItem, filter]);
 
     if (books.length === 0)
         return (
-            <div>No</div>
+            <div>No book</div>
         )
     else
         return (
             <div>
-                {books.map(book => <h1 key={book.isbn}>{book.title}  {book.description}</h1>)}
+                {books.map(book => <ViewBook book={book} />)}
             </div>
         )
 }
