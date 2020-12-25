@@ -10,15 +10,14 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
         const login_pattern = new RegExp('/login');
 
         //path login don't need authenticate
-        console.log("login", login_pattern.test(path_name));
         if (login_pattern.test(path_name)) {
             next();
         }
         else {
-            
+
             // authenticate user
             let bearerHeader = req.headers['authorization'];
-            console.log('bearerHeader:',bearerHeader);
+
             if (bearerHeader) {
                 const token = bearerHeader.split(" ")[1];
                 req.token = token
@@ -26,8 +25,8 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
                 jwt.verify(req.token, process.env.secret_key, (err, data) => {
                     if (err) res.json('Token is not verify');
                 })
-            }else{
-                console.log('do not have token');
+            } else {
+                res.json('do not have token')
             }
 
             //check authorization of user
@@ -50,7 +49,6 @@ module.exports.verifyToken_authorization = async (req, res, next) => {
             }
 
             //check user have this permision
-            console.log('count', count);
             if (count > 0)
                 next();
             else
