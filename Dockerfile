@@ -1,9 +1,13 @@
 FROM node:12.14.0
 
+WORKDIR /urs/my-app/book-management
+
 RUN npm install
 
-COPY . .
+COPY ./ ./
 
-CMD ["npm","start"]
+RUN npm install
 
-EXPOSE 3000:3000
+CMD ["/bin/bash"]
+
+EXPOSE 3009:3009
