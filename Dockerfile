@@ -9,5 +9,3 @@ COPY ./ ./
 RUN npm install
 
 CMD ["/bin/bash"]
-
-EXPOSE 3009:3009

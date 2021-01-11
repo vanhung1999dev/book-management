@@ -1,0 +1,12 @@
+version: "3.9"
+
+services: 
+    book-management:
+        container_name: back-end
+        build: ./
+        command: npm start
+        working_dir: /urs/my-app/book-management
+        ports: 
+            - "3009:3009"
+        volumes: 
+            - ./:/urs/my-app/book-management
