@@ -22,5 +22,3 @@ services:
             MYSQL_ROOT_PASSWORD: vanhung1999
             volumes:
                 - ./docker/mysql/dbdata:/var/lib/mysql
-            networks:
-                - learning-network
