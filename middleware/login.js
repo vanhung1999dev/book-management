@@ -8,21 +8,27 @@ module.exports.Login = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        const user = await User.findOne({ where: { username } });
-        const match = await bcrypt.compare(password, user.password);
+        const user = await User.findOne({ where: { username } }, { raw: true });
+        if (!user) {
+            res.json({ msg: 'Không tìm thấy người dùng...', code: 401, status: 0 });
+            return;
+        }
+
+        const match = await bcrypt.compare(password, user.dataValues.password);
 
         if (!match) {
-            res.json({ msg: 'not valid password', code: 401, status: 0 })
+            res.json({ msg: 'Password không đúng...Xin mời nhập lại ', code: 401, status: 0 });
+            return;
         }
         if (user.status === 0) {
-            res.json({ msg: 'user was block', code: 401, status: 0 });
+            res.json({ msg: 'Tài khoản đã bị khoá', code: 401, status: 0 });
+            return;
         }
         if (user) {
             const token = jwt.sign({ id: user.id, name: user.username }, process.env.secret_key);
-            res.end({ token, code: 200, status: 1 });
-        } else
-            res.json({ msg: 'invalid username or password', code: 401, status: 0 });
-
+            res.json({ token, code: 200, status: 1 });
+            return;
+        }
     } catch (error) {
         console.log(error);
     }
