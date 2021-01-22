@@ -12,17 +12,17 @@ module.exports.Login = async (req, res) => {
         const match = await bcrypt.compare(password, user.password);
 
         if (!match) {
-            res.status(404).json({ err: 'not valid password' })
+            res.json({ msg: 'not valid password', code: 401, status: 0 })
         }
-        if (user.status == 0){
-            res.status(404).json({ err: 'user was block' });
+        if (user.status === 0) {
+            res.json({ msg: 'user was block', code: 401, status: 0 });
         }
         if (user) {
             const token = jwt.sign({ id: user.id, name: user.username }, process.env.secret_key);
-            res.send(token);
+            res.end({ token, code: 200, status: 1 });
         } else
-            res.status(404).json('invalid username or password');
-            
+            res.json({ msg: 'invalid username or password', code: 401, status: 0 });
+
     } catch (error) {
         console.log(error);
     }

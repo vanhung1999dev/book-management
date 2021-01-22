@@ -8,9 +8,9 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
+        
         if (data.status == 0) {
             data.create_by = req.id;
-            // data.create_time = Date.now();
             const book = await act({ role: 'book', cmd: 'insert', data: data });
             res.send(book);
         } else
