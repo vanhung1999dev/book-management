@@ -20,6 +20,26 @@ module.exports = function book_service() {
         }
     });
 
+    this.add({ role: 'book', cmd: 'getAll' }, async (msg, reply) => {
+        try {
+            const { current_page } = msg;
+            const limit = 24;
+            let offset = 0;
+
+            if (current_page) offset = (current_page - 1) * limit;
+
+            const books = await Book.findAndCountAll({
+                limit,
+                offset,
+                order: [['id', 'DESC']]
+            });
+            reply(null, books);
+        } catch (error) {
+            console.log(error);
+        }
+    });
+
+
     this.add({ role: 'book', cmd: 'update' }, async (msg, reply) => {
         try {
             const result = await Book.update({

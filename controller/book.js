@@ -8,7 +8,7 @@ const act = Promise.promisify(Seneca.act, { context: Seneca });//make seneca to 
 module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
-        
+
         if (data.status == 0) {
             data.create_by = req.id;
             const book = await act({ role: 'book', cmd: 'insert', data: data });
@@ -31,32 +31,12 @@ module.exports.Get = async (req, res) => {
 };
 
 module.exports.FilterBook = async (req, res) => {
-    const { title, name} = req.query;
-
-    if (title && name) {
-        try {
-            console.log('search by name and title running');
-            console.log('title',title);
-            console.log('name',name);
-            const book = await act({ role: 'book', cmd: 'getByCatalogAndName', title, name });
-            res.send(book);
-        } catch (error) {
-            console.log(error);
-        }
-    } else if (title) {
-        try {
-            const book = await act({ role: 'book', cmd: 'getByName', title });
-            res.send(book);
-        } catch (error) {
-            console.log(error);
-        }
-    } else if (name) {
-        try {
-            const book = await act({ role: 'book', cmd: 'getByCatalog', name });
-            res.send(book);
-        } catch (error) {
-            console.log(error);
-        }
+    try {
+        const {current_page} = req.query;
+        const books = await act({ role: 'book', cmd: 'getAll',current_page:current_page });
+        res.send(books);
+    } catch (error) {
+        console.log('error', error);
     }
 };
 

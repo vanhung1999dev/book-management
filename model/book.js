@@ -11,7 +11,8 @@ const Book = Connect.define('Book', {
     create_time: { type: Sequelize.INTEGER },
     create_by: { type: Sequelize.INTEGER },
     approve_time: { type: Sequelize.INTEGER },
-    approve_by: { type: Sequelize.INTEGER }
+    approve_by: { type: Sequelize.INTEGER },
+    url: { type: Sequelize.STRING }
 }, {
     timestamps: false
 });
