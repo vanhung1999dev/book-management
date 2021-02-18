@@ -1,5 +1,6 @@
 const Book = require('../model/book');
-const Author = require('../model/author')
+const Author = require('../model/author');
+const Catalog = require('../model/catelog');
 
 module.exports = function book_service() {
     this.add({ role: 'book', cmd: 'insert' }, async (msg, reply) => {

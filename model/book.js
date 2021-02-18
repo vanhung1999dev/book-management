@@ -5,14 +5,15 @@ const Catelog = require('./catelog');
 
 const Book = Connect.define('Book', {
     title: { type: Sequelize.STRING(255) },
-    isbn: { type: Sequelize.STRING(20) },
+    rate: { type: Sequelize.INTEGER},
     status: { type: Sequelize.INTEGER(4) },
     description: { type: Sequelize.TEXT },
     create_time: { type: Sequelize.INTEGER },
     create_by: { type: Sequelize.INTEGER },
     approve_time: { type: Sequelize.INTEGER },
     approve_by: { type: Sequelize.INTEGER },
-    url: { type: Sequelize.STRING }
+    url: { type: Sequelize.STRING },
+    pages: { type: Sequelize.INTEGER },
 }, {
     timestamps: false
 });
