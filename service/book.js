@@ -43,12 +43,12 @@ module.exports = function book_service() {
 
     this.add({ role: 'book', cmd: 'update' }, async (msg, reply) => {
         try {
-            const result = await Book.update({
-                title: msg.data.title,
-                isbn: msg.data.isbn,
-                status: 1,
-                description: msg.data.description
-            }, { where: { id: msg.id } });
+            const { title, rate, description, create_time, url, CatelogId, AuthorId, pages } = msg.data;
+            const result = await Book.update(
+                { title, rate, description, create_time, url, CatelogId, AuthorId, pages },
+                { where: { id: msg.id } }
+            );
+            
             reply(null, { fielsAffect: result });
         } catch (error) {
             console.log(error);

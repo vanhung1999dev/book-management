@@ -32,8 +32,8 @@ module.exports.Get = async (req, res) => {
 
 module.exports.FilterBook = async (req, res) => {
     try {
-        const {current_page} = req.query;
-        const books = await act({ role: 'book', cmd: 'getAll',current_page:current_page });
+        const { current_page } = req.query;
+        const books = await act({ role: 'book', cmd: 'getAll', current_page: current_page });
         res.send(books);
     } catch (error) {
         console.log('error', error);
@@ -43,32 +43,14 @@ module.exports.FilterBook = async (req, res) => {
 module.exports.Update = async (req, res) => {
     try {
         const id = req.params.id;
-        const book = await act({ role: 'book', cmd: 'get', id: id });
-
-        if (book.status == 0) {
-            const data = req.body;
-            const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
-            res.send(result);
-        } else
-            res.send('book was approve by' + book.approved_by);
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-module.exports.Approved = async (req, res) => {
-    try {
-        const id = req.params.id;
-        let data = req.body;
-        data.approved_by = req.id;
-        //data.approved_time = Date.now();
-
-        const result = await act({ role: 'book', cmd: 'approve', id: id, data: data });
+        const data = req.body;
+        const result = await act({ role: 'book', cmd: 'update', id: id, data: data });
         res.send(result);
     } catch (error) {
         console.log(error);
     }
 };
+
 
 module.exports.Delete = async (req, res) => {
     try {
