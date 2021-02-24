@@ -9,12 +9,8 @@ module.exports.Insert = async (req, res) => {
     try {
         const data = req.body;
 
-        if (data.status == 0) {
-            data.create_by = req.id;
-            const book = await act({ role: 'book', cmd: 'insert', data: data });
-            res.send(book);
-        } else
-            res.send('book was approved');
+        const book = await act({ role: 'book', cmd: 'insert', data: data });
+        res.send(book);
     } catch (error) {
         console.log(error);
     }
