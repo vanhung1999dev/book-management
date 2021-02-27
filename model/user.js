@@ -11,7 +11,8 @@ const User = Connect.define('User', {
     block_massage: { type: Sequelize.STRING },
     block_time: { type: Sequelize.INTEGER },
     create_time: { type: Sequelize.INTEGER },
-    create_by: { type: Sequelize.INTEGER }
+    create_by: { type: Sequelize.INTEGER },
+    avatar: { type: Sequelize.STRING }
 }, {
     timestamps: false
 });
