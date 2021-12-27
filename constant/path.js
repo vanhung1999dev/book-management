@@ -1,7 +1,7 @@
 
 const list_permision = [
     //user permision
-    { path: "^POST,/users$", id_permision: 1 },
+    { path: "^POST,/users$", id_permision: 1 },lkjlk
     { path: "^GET,/users/[0-9]+$", id_permision: 2 },
     { path: "^GET,/users$", id_permision: 3 },
     { path: "^PUT,/users/[0-9]+$", id_permision: 4 },
